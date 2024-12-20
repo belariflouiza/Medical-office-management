@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/calendar-api.json
+appoitment-service/src/main/resources/calendar-api.json
