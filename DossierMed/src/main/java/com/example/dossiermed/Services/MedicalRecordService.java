@@ -6,13 +6,28 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class MedicalRecordService {
 
-    private final List<MedicalRecord> medicalRecordsDb = new ArrayList<>();
+    private static final List<MedicalRecord> medicalRecordsDb = new ArrayList<>();
+
+    static {
+        // Initialisation des données statiques pour MedicalRecord
+        Random random = new Random();
+        for (int i = 1; i <= 10; i++) {
+            MedicalRecord record = new MedicalRecord();
+            record.setId(i);
+            record.setPatientId(random.nextInt(100));
+            record.setPractitionerId(random.nextInt(50));
+            record.setContent("Contenu médical aléatoire n°" + i + " - Patient ID: " + record.getPatientId() + ", Practitioner ID: " + record.getPractitionerId());
+            medicalRecordsDb.add(record);
+        }
+    }
 
     public List<MedicalRecord> getAllMedicalRecords() {
         return medicalRecordsDb;
@@ -51,6 +66,8 @@ public class MedicalRecordService {
     public MedicalRecord updateMedicalRecord(int id, MedicalRecord updatedRecord) {
         MedicalRecord existingRecord = getMedicalRecordById(id);
         existingRecord.setContent(updatedRecord.getContent());
+        existingRecord.setPatientId(updatedRecord.getPatientId());
+        existingRecord.setPractitionerId(updatedRecord.getPractitionerId());
         return existingRecord;
     }
 
