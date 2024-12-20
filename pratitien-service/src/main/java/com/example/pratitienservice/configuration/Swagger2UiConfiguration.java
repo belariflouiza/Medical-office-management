@@ -21,9 +21,9 @@ public class Swagger2UiConfiguration extends WebMvcConfigurationSupport {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
-                .build()
-                ;
+                .apis(RequestHandlerSelectors.any()) // Inclure tous les contrôleurs
+                .apis(RequestHandlerSelectors.basePackage("org.springframework.boot").negate()) // Exclure les paquets Spring Boot
+                .build();
     }
 
     @Override
