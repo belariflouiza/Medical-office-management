@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: appointment-service
+  retry:
+    maxAttempts: 3
+    backoff:
+      delay: 2000
+
+google:
+  calendar:
+    credentials: src/main/resources/calendar-api.json
+    application-name: Appointment Service
